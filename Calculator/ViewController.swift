@@ -11,18 +11,21 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var resultLabel: UILabel!
+    @IBOutlet weak var buttonTrue: UIButton!
+    @IBOutlet weak var buttonFalse: UIButton!
+    
     var first: Bool?
     var second: Bool?
     var operation: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        changeRadius()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func changeRadius() {
+        buttonTrue.layer.cornerRadius = 24
+        buttonFalse.layer.cornerRadius = 24
     }
     
     // MARK: Buttons Actions
@@ -39,7 +42,6 @@ class ViewController: UIViewController {
         operation = "NotEqual"
     }
     
-    
     @IBAction func clickedOr(_ sender: UIButton) {
         operation = "Or"
     }
@@ -50,6 +52,7 @@ class ViewController: UIViewController {
         } else {
             first = true
         }
+        resultLabel.backgroundColor = UIColor(red: 51/255, green: 102/255, blue: 216/255, alpha: 1.0)
     }
     
     @IBAction func clickedFalse(_ sender: UIButton) {
@@ -59,21 +62,31 @@ class ViewController: UIViewController {
         } else {
             first = false
         }
+        resultLabel.backgroundColor = UIColor(red: 51/255, green: 102/255, blue: 216/255, alpha: 1.0)
     }
     
     @IBAction func clickedClear(_ sender: UIButton) {
-        resultLabel.text = " "
+        resultLabel.text = ""
         first = nil
         second = nil
-        resultLabel.alpha = 1
+        resultLabel.backgroundColor = UIColor(red: 51/255, green: 102/255, blue: 216/255, alpha: 1.0)
     }
     
     @IBAction func clickedResult(_ sender: UIButton) {
-        resultLabel.alpha = 0.5
         if (operation == "Equal") {
-            resultLabel.text = first==second ? "true" : "false"
+                resultLabel.text = first == second ? "true" : "false"
+        } else if (operation == "NotEqual") {
+            resultLabel.text = first != second ? "true" : "false"
         } else if (operation == "And") {
             resultLabel.text = first! && second! ? "true" : "false"
+        } else if (operation == "Or") {
+            resultLabel.text = first! || second! ? "true" : "false"
+        }
+        
+        if resultLabel.text == "true" {
+            resultLabel.backgroundColor = UIColor(red: 0/255, green: 121/255, blue: 1/255, alpha: 1.0)
+        } else {
+            resultLabel.backgroundColor = UIColor(red: 176/255, green: 50/255, blue: 28/255, alpha: 1.0)
         }
         first = nil
         second = nil
